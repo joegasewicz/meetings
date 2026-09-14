@@ -1,5 +1,8 @@
 import wx
 
+from gui.screens.project_screen import ProjectScreen
+from gui.screens.home_screen import HomeScreen
+
 
 class MainScreen(wx.Frame):
 
@@ -8,6 +11,7 @@ class MainScreen(wx.Frame):
     def __init__(self, parent: str, title: str):
         wx.Frame.__init__(self, parent, title=title, size=(1000, 700))
         self.current_screen = None
+        self.show_screen(HomeScreen)
         self._create_menu()
 
         self.Show(True)
@@ -16,9 +20,24 @@ class MainScreen(wx.Frame):
         self.CreateStatusBar()
         # Main menu
         file_menu = wx.Menu()
-        file_menu.Append(wx.ID_ANY, "&New Project", "Create a new project")
+        new_project_item = file_menu.Append(wx.ID_ANY, "&New Project", "Create a new project")
         file_menu.AppendSeparator()
-             # Status bar
+        # Status bar
         menu_bar = wx.MenuBar()
         menu_bar.Append(file_menu, "&File")
         self.SetMenuBar(menu_bar)
+
+        self.Bind(wx.EVT_MENU, self._on_new_project, new_project_item)
+
+    def _on_new_project(self, event: wx.Event) -> None:
+        self.show_screen(ProjectScreen)
+
+    def show_screen(self, screen_class):
+        if self.current_screen:
+            self.current_screen.Destroy()
+        self.current_screen = screen_class(self)
+        self.current_screen.Show()
+        self.Layout()
+
+
+
