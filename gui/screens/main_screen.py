@@ -2,16 +2,18 @@ import wx
 
 from gui.screens.project_screen import ProjectScreen
 from gui.screens.home_screen import HomeScreen
+from meetings import Meeting
 
 
 class MainScreen(wx.Frame):
 
     current_screen: wx.Panel
 
-    def __init__(self, parent: str, title: str):
+    def __init__(self, parent: str, title: str, meeting: Meeting):
         wx.Frame.__init__(self, parent, title=title, size=(1000, 700))
+        self.meeting = meeting
         self.current_screen = None
-        self.show_screen(HomeScreen)
+        self.show_screen(HomeScreen, self.meeting)
         self._create_menu()
 
         self.Show(True)
@@ -30,14 +32,11 @@ class MainScreen(wx.Frame):
         self.Bind(wx.EVT_MENU, self._on_new_project, new_project_item)
 
     def _on_new_project(self, event: wx.Event) -> None:
-        self.show_screen(ProjectScreen)
+        self.show_screen(ProjectScreen, self.meeting)
 
-    def show_screen(self, screen_class):
+    def show_screen(self, screen_class, *args, **kwargs):
         if self.current_screen:
             self.current_screen.Destroy()
-        self.current_screen = screen_class(self, )
+        self.current_screen = screen_class(self, *args, **kwargs)
         self.current_screen.Show()
         self.Layout()
-
-
-

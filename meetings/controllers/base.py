@@ -3,7 +3,7 @@ from abc import ABC, abstractmethod
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm import Session
 
-from meetings.models import Model
+from meetings.models import Model, ProjectModel
 from utils.database import Database
 
 
@@ -31,7 +31,7 @@ class AbstractController(ABC):
     def fetch_all(self) -> list[Model]: ...
 
     @abstractmethod
-    def create(self) -> None: ...
+    def create(self, *, data: dict) -> Model: ...
 
     @abstractmethod
     def update(self) -> None: ...

@@ -13,10 +13,10 @@ MEETINGS_WEB = os.environ.get("MEETINGS_WEB", False)
 if __name__ == "__main__":
     if MEETINGS_GUI:
         config = Config()
-        config.APPLICATION_TYPE = "gui"
+        config.jAPPLICATION_TYPE = "gui"
         log.info("Launching GUI")
-        issue_tracker = Meeting(config=config)
-        gui = Gui(issue_tracker=issue_tracker)
+        meeting = Meeting(config=config)
+        gui = Gui(meeting=meeting)
         gui.run()
 
     if MEETINGS_WEB:

@@ -24,5 +24,3 @@ class UserModel(Model):
         server_default=func.now(),
         onupdate=func.now(),
     )
-
-    status_id: Mapped[int] = mapped_column(ForeignKey("statuses.id"), index=True)
