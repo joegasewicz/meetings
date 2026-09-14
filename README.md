@@ -1,6 +1,9 @@
 # Meetings
 Track & audit issues (including JIRA) that you are working on.
 
+Either run Meetings as a native desktop application or in a local web browser.
+
+
 ### Install
 ```
 pip install meetings
