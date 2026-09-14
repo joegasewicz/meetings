@@ -1,6 +1,6 @@
 import wx
 
-from meetings.issue_tracker import IssueTracker
+from meetings.meeting import Meeting
 from gui.screens import (
     MainScreen,
 )
@@ -10,9 +10,9 @@ class Gui:
 
     wx_app: wx.App
     home_frame: wx.Frame
-    issue_tracker: IssueTracker
+    issue_tracker: Meeting
 
-    def __init__(self, *, issue_tracker: IssueTracker):
+    def __init__(self, *, issue_tracker: Meeting):
         self.issue_tracker = issue_tracker
         self.wx_app = wx.App()
 

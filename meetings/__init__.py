@@ -1,1 +1,1 @@
-from meetings.issue_tracker import IssueTracker
+from meetings.meeting import Meeting

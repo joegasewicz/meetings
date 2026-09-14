@@ -28,8 +28,11 @@ class ProjectScreen(wx.Panel):
         sizer.Add(title, 0, wx.ALL, 10)
         sizer.Add(name_label, 0, wx.LEFT | wx.RIGHT | wx.TOP, 10)
         sizer.Add(self.name_input, 0, wx.ALL | wx.EXPAND, 10)
-        sizer.Add(submit_button, 0, wx.LEFT, 5)
-        sizer.Add(cancel_button, 0, wx.RIGHT, 5)
+
+        button_sizer = wx.BoxSizer(wx.HORIZONTAL)
+        button_sizer.Add(submit_button, 0)
+        button_sizer.Add(cancel_button, 0, wx.LEFT, 5)
+        sizer.Add(button_sizer, 0, wx.ALL, 10)
 
         self.SetSizer(sizer)
 
@@ -39,4 +42,5 @@ class ProjectScreen(wx.Panel):
     def on_submit(self, event: wx.Event):
         project_name = self.name_input.GetValue()
         log.info(f"Created new project: {project_name}")
+        
 
