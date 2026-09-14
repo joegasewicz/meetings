@@ -1,5 +1,5 @@
 # Meetings
-Track & audit issues (including JIRA) that you are working/worked on.
+Track & audit issues (including JIRA) that you are working on.
 
 ### Install
 ```
