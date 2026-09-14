@@ -35,7 +35,7 @@ class MainScreen(wx.Frame):
     def show_screen(self, screen_class):
         if self.current_screen:
             self.current_screen.Destroy()
-        self.current_screen = screen_class(self)
+        self.current_screen = screen_class(self, )
         self.current_screen.Show()
         self.Layout()
 

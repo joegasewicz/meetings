@@ -4,12 +4,23 @@ from gui.utils.fonts import create_title
 from meetings.models import (
     ProjectModel,
 )
+from controllers import (
+    AbstractController,
+    ProjectController,
+)
+from utils.logger import log
+from utils.database import Database
+from config import Config
 
 
 class HomeScreen(wx.Panel):
 
+    project_controller: AbstractController
+
     def __init__(self, parent):
         super().__init__(parent)
+        db = Database(config=Config())
+        self.project_controller = ProjectController(db)
 
         sizer = wx.BoxSizer(wx.VERTICAL)
 
@@ -21,14 +32,15 @@ class HomeScreen(wx.Panel):
         project_title = wx.StaticText(self, label="Projects")
         create_title(project_title)
 
-        projects = self.get_projects()
-
         sizer.Add(title, 0, wx.ALL, 10)
         sizer.Add(line, 0, wx.EXPAND | wx.LEFT | wx.RIGHT, 10)
         sizer.AddSpacer(20)
         sizer.Add(project_title, 0, wx.ALL, 10)
 
-        self.SetSizer(sizer)
+        projects = self.project_controller.fetch_all()
+        log.info(f"Fetched Projects...{projects}")
+        if len(projects) == 0:
+            projects_msg = wx.StaticText(self, label="You have no projects.")
+            sizer.Add(projects_msg, 0, wx.ALL, 10)
 
-    def get_projects(self) -> list[ProjectModel]:
-        pass
+        self.SetSizer(sizer)

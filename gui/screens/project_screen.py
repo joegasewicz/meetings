@@ -1,15 +1,26 @@
 import wx
 
+from config import Config
+from controllers import (
+    AbstractController,
+    ProjectController,
+)
 from gui.screens.home_screen import HomeScreen
 from gui.utils.fonts import create_title
+from utils import database
 from utils.logger import log
+from utils.database import Database
 
 
 class ProjectScreen(wx.Panel):
 
-    def __init__(self, parent):
+    project_controller: AbstractController
+
+    def __init__(self, parent, ):
         super().__init__(parent)
         self.parent = parent
+        db = Database(config=Config())
+        self.project_controller = ProjectController(db)
 
         sizer = wx.BoxSizer(wx.VERTICAL)
 
@@ -42,5 +53,5 @@ class ProjectScreen(wx.Panel):
     def on_submit(self, event: wx.Event):
         project_name = self.name_input.GetValue()
         log.info(f"Created new project: {project_name}")
-        
+
 
