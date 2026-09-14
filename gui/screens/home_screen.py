@@ -8,7 +8,6 @@ from controllers import (
     AbstractController,
     ProjectController,
 )
-from utils import database
 from utils.logger import log
 from utils.database import Database
 from config import Config
