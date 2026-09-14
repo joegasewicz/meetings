@@ -5,7 +5,7 @@ from config import Config
 from utils.database import Database
 
 from utils.logger import log
-from issue_tracker.models import (
+from meetings.models import (
     Model,
     tables,
 )

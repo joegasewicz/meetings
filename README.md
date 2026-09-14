@@ -1,4 +1,4 @@
-# Issue Tracker
+# Meetings
 Track & audit issues (including JIRA) that you are working/worked on.
 
 ### Install
@@ -7,16 +7,16 @@ TODO...
 ```
 
 ### Launching
-Issue Tracker provides a desktop GUI or a web server to run locally.
+Meetings provides a desktop GUI or a web server to run locally.
 
 #### Launch the GUI
 ```
-export ISSUE_TRACKER_GUI=1 && python cmd.py
+export MEETINGS_GUI=1 && python cmd.py
 ```
 
 #### Launch Web Server
 ```
-export ISSUE_TRACKER_WEB=1 && python cmd.py
+export MEETINGS_WEB=1 && python cmd.py
 ```
 
 ### Contributing

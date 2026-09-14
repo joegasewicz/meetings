@@ -3,17 +3,16 @@ from datetime import datetime
 from sqlalchemy import String, DateTime, ForeignKey, func, TEXT
 from sqlalchemy.orm import Mapped, mapped_column
 
-from  issue_tracker.models import Model
+from  meetings.models import Model
 
 
-class UserModel(Model):
+class StandupNoteModel(Model):
 
-    __tablename__ = "users"
+    __tablename__ = "standup_notes"
 
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
-    email: Mapped[str] = mapped_column(String(120), unique=True, nullable=True)
-    password: Mapped[str] = mapped_column(String(120), nullable=True)
-    full_name: Mapped[str] = mapped_column(String(30), unique=True, nullable=False)
+    note: Mapped[str] = mapped_column(TEXT, nullable=False)
+    standup_date: Mapped[datetime] = mapped_column(DateTime(timezone=True))
 
     created_date: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),
@@ -25,4 +24,5 @@ class UserModel(Model):
         onupdate=func.now(),
     )
 
-    status_id: Mapped[int] = mapped_column(ForeignKey("statuses.id"), index=True)
+    user_id: Mapped[int] = mapped_column(ForeignKey("users.id"), nullable=False)
+    project_id: Mapped[int] = mapped_column(ForeignKey("projects.id"), nullable=False)

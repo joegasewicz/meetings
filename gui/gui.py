@@ -1,6 +1,6 @@
 import wx
 
-from issue_tracker.issue_tracker import IssueTracker
+from meetings.issue_tracker import IssueTracker
 from gui.screens import (
     MainScreen,
 )

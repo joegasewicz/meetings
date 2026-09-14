@@ -3,7 +3,7 @@ from datetime import datetime
 from sqlalchemy import String, DateTime, ForeignKey, func, TEXT
 from sqlalchemy.orm import Mapped, mapped_column
 
-from  issue_tracker.models import Model
+from  meetings.models import Model
 
 
 class StatusModel(Model):
