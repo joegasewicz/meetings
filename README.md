@@ -7,6 +7,7 @@ TODO...
 ```
 
 ### Launching
+Issue Tracker provides a desktop GUI or a web server to run locally.
 
 #### Launch the GUI
 ```
@@ -14,7 +15,9 @@ export ISSUE_TRACKER_GUI=1 && python cmd.py
 ```
 
 #### Launch Web Server
-TODO
+```
+export ISSUE_TRACKER_WEB=1 && python cmd.py
+```
 
 ### Contributing
 For new features, please open up an issue to pitch your idea, do not push any PRs up until the author 
