@@ -8,7 +8,7 @@ log.addHandler(stream_handler)
 log.setLevel(logging.INFO)
 
 formatter = logging.Formatter(
-    "{message}",
+    "[Meetings]: {message}",
     style="{",
 )
 stream_handler.setFormatter(formatter)

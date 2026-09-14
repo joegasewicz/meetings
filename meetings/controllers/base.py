@@ -8,6 +8,11 @@ from utils.database import Database
 
 
 class AbstractController(ABC):
+    """
+    Abstract controller class returns SQLAlchemy objects
+    as the GUI client doesn't require JSON. Web client should marshal
+    data upstream.
+    """
 
     def __init__(self, database: Database):
         self.database = database
