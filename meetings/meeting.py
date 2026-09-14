@@ -11,13 +11,12 @@ from meetings.models import (
 )
 
 
-class IssueTracker:
+class Meeting:
 
     # If a user has a paid subscription, then use remote Postgres
     has_subscription: bool
     db_type: str = "sqlite"
     database: Database
-    db_session_factory: sessionmaker[Session]
 
     def __init__(self, *, config: Config):
         self.config = config
@@ -28,16 +27,10 @@ class IssueTracker:
             self.database = Database(config=config)
             conn_str = self.database.get_db_conn()
             engine = self.database.get_engine(conn_str=conn_str)
-            self.db_session_factory = sessionmaker(
-                bind=engine,
-                autoflush=False,
-                autocommit=False,
-            )
             Model.metadata.create_all(engine, tables=tables)
             log.info("Creating local tables")
             for table in Model.metadata.sorted_tables:
                 log.info(f"\t- {table}")
-
 
     def _user_has_subscription(self) -> bool:
         """
