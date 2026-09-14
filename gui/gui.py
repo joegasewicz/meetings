@@ -10,13 +10,12 @@ class Gui:
 
     wx_app: wx.App
     home_frame: wx.Frame
-    issue_tracker: Meeting
+    meeting: Meeting
 
-    def __init__(self, *, issue_tracker: Meeting):
-        self.issue_tracker = issue_tracker
+    def __init__(self, *, meeting: Meeting):
+        self.meeting = meeting
         self.wx_app = wx.App()
-
-        self.main_screen = MainScreen(None, "Standup App")
+        self.main_screen = MainScreen(None, "Standup App", meeting)
 
     def run(self) -> None:
         self.wx_app.MainLoop()

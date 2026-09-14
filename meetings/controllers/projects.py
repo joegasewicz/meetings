@@ -11,14 +11,14 @@ from models import (
 
 class ProjectController(AbstractController):
 
-    def fetch_one(self) -> Model | None:
+    def fetch_one(self) -> ProjectModel | None:
         pass
 
-    def fetch_all(self) -> list[Model]:
+    def fetch_all(self) -> list[ProjectModel]:
         with self.get_session() as session:
             return list(session.scalars(select(ProjectModel)).all())
 
-    def create(self) -> None:
+    def create(self, *, data: dict) -> ProjectModel:
         pass
 
     def update(self) -> None:

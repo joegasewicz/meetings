@@ -28,3 +28,4 @@ class IssueModel(Model):
     user_id: Mapped[int] = mapped_column(ForeignKey("users.id"), nullable=False)
     project_id: Mapped[int] = mapped_column(ForeignKey("projects.id"), nullable=False)
     standup_note_id: Mapped[int] = mapped_column(ForeignKey("standup_notes.id"))
+    status_id: Mapped[int] = mapped_column(ForeignKey("statuses.id"), index=True)

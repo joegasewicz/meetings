@@ -7,6 +7,7 @@ from controllers import (
 )
 from gui.screens.home_screen import HomeScreen
 from gui.utils.fonts import create_title
+from meetings import Meeting
 from utils import database
 from utils.logger import log
 from utils.database import Database
@@ -16,9 +17,10 @@ class ProjectScreen(wx.Panel):
 
     project_controller: AbstractController
 
-    def __init__(self, parent, ):
+    def __init__(self, parent, meeting: Meeting):
         super().__init__(parent)
         self.parent = parent
+        self.meeting = meeting
         db = Database(config=Config())
         self.project_controller = ProjectController(db)
 
@@ -48,10 +50,12 @@ class ProjectScreen(wx.Panel):
         self.SetSizer(sizer)
 
     def on_cancel(self, event: wx.Event) -> None:
-        self.parent.show_screen(HomeScreen)
+        self.parent.show_screen(HomeScreen, self.meeting)
 
     def on_submit(self, event: wx.Event):
         project_name = self.name_input.GetValue()
         log.info(f"Created new project: {project_name}")
-
-
+        data = {
+            "name": project_name,
+        }
+        self.project_controller.create(data=data)
