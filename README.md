@@ -3,7 +3,7 @@ Track & audit issues (including JIRA) that you are working/worked on.
 
 ### Install
 ```
-TODO...
+pip install meetings
 ```
 
 ### Launching
