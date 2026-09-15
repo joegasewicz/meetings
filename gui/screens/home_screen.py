@@ -12,6 +12,7 @@ from controllers import (
 from utils.logger import log
 from utils.database import Database
 from config import Config
+from gui.screens.project_detail_screen import ProjectDetailScreen
 
 
 class HomeScreen(wx.Panel):
@@ -47,7 +48,15 @@ class HomeScreen(wx.Panel):
             sizer.Add(projects_msg, 0, wx.ALL, 10)
         else:
             for i, project in enumerate(self.projects):
-                projects_msg = wx.StaticText(self, label=f"{i}. {project.name}")
-                sizer.Add(projects_msg, 0, wx.ALL, 10)
+                project_link = wx.Button(self, label=f"{i+1}. {project.name}", style=wx.BORDER_NONE)
+                project_link.Bind(
+                    wx.EVT_BUTTON,
+                    lambda event, project_id=project.id: parent.show_screen(
+                        ProjectDetailScreen,
+                        self.meeting,
+                        project_id,
+                    ),
+                )
+                sizer.Add(project_link, 0, wx.ALL, 10)
 
         self.SetSizer(sizer)

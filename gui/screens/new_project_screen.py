@@ -8,12 +8,11 @@ from controllers import (
 from gui.screens.home_screen import HomeScreen
 from gui.utils.fonts import create_title
 from meetings import Meeting
-from utils import database
 from utils.logger import log
 from utils.database import Database
 
 
-class ProjectScreen(wx.Panel):
+class NewProjectScreen(wx.Panel):
 
     project_controller: AbstractController
 
@@ -57,5 +56,10 @@ class ProjectScreen(wx.Panel):
         log.info(f"Created new project: {project_name}")
         data = {
             "name": project_name,
+            "user_id": self.meeting.user.id,
         }
-        self.project_controller.create(data=data)
+
+        project = self.project_controller.create(data=data)
+        if not project:
+            pass # TODO flash alert
+        self.parent.show_screen(HomeScreen, self.meeting)
