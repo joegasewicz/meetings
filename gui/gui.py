@@ -15,7 +15,7 @@ class Gui:
     def __init__(self, *, meeting: Meeting):
         self.meeting = meeting
         self.wx_app = wx.App()
-        self.main_screen = MainScreen(None, "Standup App", meeting)
+        self.main_screen = MainScreen(None, "Meetings", meeting)
 
     def run(self) -> None:
         self.wx_app.MainLoop()

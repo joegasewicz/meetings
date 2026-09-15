@@ -12,7 +12,7 @@ class UserController(AbstractController):
     def fetch_all(self) -> list[UserModel]:
         pass
 
-    def create(self, *, data: dict) -> UserModel:
+    def create(self, *, data: dict) -> UserModel | None:
         with self.get_session() as session:
 
             existing_user = session.execute(

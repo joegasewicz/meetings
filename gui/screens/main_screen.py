@@ -1,6 +1,6 @@
 import wx
 
-from gui.screens.project_screen import ProjectScreen
+from gui.screens.new_project_screen import NewProjectScreen
 from gui.screens.home_screen import HomeScreen
 from meetings import Meeting
 
@@ -14,25 +14,29 @@ class MainScreen(wx.Frame):
         self.meeting = meeting
         self.current_screen = None
         self.show_screen(HomeScreen, self.meeting)
-        self._create_menu()
+        self.create_menu()
 
         self.Show(True)
 
-    def _create_menu(self) -> None:
+    def create_menu(self) -> None:
         self.CreateStatusBar()
         # Main menu
         file_menu = wx.Menu()
+        home_item = file_menu.Append(wx.ID_ANY, "&Home", "Home screen")
+        file_menu.AppendSeparator()
         new_project_item = file_menu.Append(wx.ID_ANY, "&New Project", "Create a new project")
+
         file_menu.AppendSeparator()
         # Status bar
         menu_bar = wx.MenuBar()
         menu_bar.Append(file_menu, "&File")
         self.SetMenuBar(menu_bar)
 
-        self.Bind(wx.EVT_MENU, self._on_new_project, new_project_item)
+        self.Bind(wx.EVT_MENU, self.on_home, home_item)
+        self.Bind(wx.EVT_MENU, self.on_new_project, new_project_item)
 
-    def _on_new_project(self, event: wx.Event) -> None:
-        self.show_screen(ProjectScreen, self.meeting)
+    def on_new_project(self, event: wx.Event) -> None:
+        self.show_screen(NewProjectScreen, self.meeting)
 
     def show_screen(self, screen_class, *args, **kwargs):
         if self.current_screen:
@@ -40,3 +44,6 @@ class MainScreen(wx.Frame):
         self.current_screen = screen_class(self, *args, **kwargs)
         self.current_screen.Show()
         self.Layout()
+
+    def on_home(self, event: wx.Event):
+        self.show_screen(HomeScreen, self.meeting)
