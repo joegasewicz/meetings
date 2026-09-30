@@ -2,13 +2,10 @@ import wx
 
 from gui.utils.fonts import create_title
 from meetings.meeting import Meeting
-from meetings.models import (
-    ProjectModel,
-    UserModel,
-)
 from meetings.controllers import (
     ProjectController,
 )
+from gui.screens.create_issue_screen import CreateIssueScreen
 from utils.database import Database
 from config import Config
 from utils.logger import log
@@ -16,10 +13,11 @@ from utils.logger import log
 
 class ProjectDetailScreen(wx.Panel):
 
-    def __init__(self, parent: wx.Panel, meeting: Meeting, project_id: int):
+    def __init__(self, parent, meeting: Meeting, project_id: int):
         super().__init__(parent)
         self.meeting = meeting
         self.project_id = project_id
+        self.parent = parent
         log.info(f"Project detail with id: {project_id}")
 
         config = Config()
@@ -39,8 +37,7 @@ class ProjectDetailScreen(wx.Panel):
         content_sizer.Add(right_column, 3, wx.EXPAND | wx.ALL, 10)
 
         # Top menu
-
-        data = {"project_id": project_id}
+        data = {"project_id": self.project_id}
         project = self.project_controller.fetch_one(data=data)
 
         title = wx.StaticText(self, label=f"Project - {project.name}", style=wx.ALIGN_CENTRE)
@@ -54,15 +51,22 @@ class ProjectDetailScreen(wx.Panel):
 
         self.SetSizer(sizer)
 
-
     def display_left_col(self) -> wx.Panel:
         left_column = wx.Panel(self)
         left_sizer = wx.BoxSizer(wx.VERTICAL)
 
+        # Title
         issue_title = wx.StaticText(left_column, label="Issues")
         create_title(issue_title)
-
         left_sizer.Add(issue_title, 0, wx.EXPAND | wx.ALL, 10)
+
+        # Issue Create Button
+        create_button = wx.Button(left_column, label="Create issue")
+        create_button.Bind(wx.EVT_BUTTON, lambda e: self.parent.show_screen(CreateIssueScreen, self.meeting))
+        button_sizer = wx.BoxSizer(wx.HORIZONTAL)
+        button_sizer.Add(create_button, 0)
+        left_sizer.Add(button_sizer, 0, wx.ALL, 10)
+
         left_column.SetSizer(left_sizer)
         return left_column
 
