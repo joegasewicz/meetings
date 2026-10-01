@@ -2,6 +2,8 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm import Session
 
 from config import Config
+from meetings.controllers.statuses import StatusController
+from models import StatusModel
 from utils.database import Database
 from meetings.controllers.users import UserController
 from utils.logger import log
@@ -20,10 +22,12 @@ class Meeting:
     database: Database
     user_controller: UserController
     user: UserModel
+    statuses: list[StatusModel]
 
     def __init__(self, *, config: Config):
         self.config = config
         self.user_controller = UserController(database=Database(config=config))
+        self.status_controller = StatusController(database=Database(config=config))
         self.has_subscription = self._user_has_subscription()
         if self.has_subscription:
             """TODO use remote Postgres here..."""
@@ -39,6 +43,14 @@ class Meeting:
         # Creating a default user with default values
         self.user = self.user_controller.create(data={})
         log.info(f"Successfully created user with id: {self.user.id}")
+        # Create statuses
+        statuses = ["Backlog", "In Progress", "Testing", "Done", "Blocked"]
+        data = {"names": statuses}
+        self.statuses = self.status_controller.create(data=data)
+        if not self.statuses:
+            self.statuses = self.status_controller.fetch_all()
+        log.info(f"Created states: {self.statuses}")
+
 
     def _user_has_subscription(self) -> bool:
         """
